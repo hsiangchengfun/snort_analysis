@@ -1,0 +1,7 @@
+archive
+test
+.vscode
+*.gcda
+*.gcno
+*.o
+.DS_Store
