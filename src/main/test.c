@@ -41,12 +41,30 @@ int main(int argc, char **argv){
     }
 
     //* start to analyze the function
-    printf("Total number of files %d\n", num);
+    // printf("Total number of files %d\n", num);
+    // for(int i=0;i<num;i++) {
+    //     printf("File name: %s\n", inputList->ruleFileName);
+    //     printf("# rules: %d\n", inputList->numOfRules);
+    //     printf("# contents: %d\n", inputList->numOfContents);
+    // }
+
+    FILE* ofp;
+
+    ofp = fopen("rules_compressed.txt", "w");
+
+    
     for(int i=0;i<num;i++) {
-        printf("File name: %s\n", inputList->ruleFileName);
-        printf("# rules: %d\n", inputList->numOfRules);
-        printf("# contents: %d\n", inputList->numOfContents);
+        struct Entry* tmp;
+        tmp = &inputList[i];
+        for(int j=0;j<tmp->numOfContents;j++) {
+            fprintf(ofp, "%s\n", tmp->contents[j]);
+        }
     }
+
+    fclose(ofp);
+    
+
+
 
     return 0;
 }
@@ -315,6 +333,7 @@ struct Entry * loadRulesDir(char **argv, int *num){
                 continue;
 
             sprintf(buf, "%s%s", argv[1], ent->d_name);
+
             struct Entry *e = loadRulesRegular(buf, num);
 
             if (e == NULL)
